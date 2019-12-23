@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 
-public class NoMatchListFoundException extends Exception {
+public class ProductNotFoundException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public NoMatchListFoundException(String exception) {
+	public ProductNotFoundException(String exception) {
 		super(exception);
 	}
 }
