@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,40 +19,48 @@ import com.ecommerce.product.repository.CustomerOrderRepository;
 import com.ecommerce.product.repository.CustomerRepository;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
-public class CustomerOrderServiceImpl implements CustomerOrderService{
-	
+public class CustomerOrderServiceImpl implements CustomerOrderService {
+
 	@Autowired
 	CustomerOrderRepository customerOrderRepository;
-	
+
 	@Autowired
 	CustomerRepository customerRepository;
 
 	/**
-	 * @author Hema J
-	 * This method is used to get the list of orders on particular customerId
-	 * @param customerId is a datatype of Long  
+	 * @author Hema J This method is used to get the list of orders on particular
+	 *         customerId
+	 * @param customerId is a datatype of Long
 	 * @return OrderResponseDto which lists the orders on that particular customerId
-	 * @throws CustomerNotExistException 
-	 * @throws OrderNotFoundException 
+	 * @throws CustomerNotExistException
+	 * @throws OrderNotFoundException
 	 */
 	@Override
 	public OrderResponseDto getOrderList(Long customerId) throws CustomerNotExistException, OrderNotFoundException {
-		/*
-		 * log.info("Entering into getOrderList"); Optional<Customer>
-		 * customer=customerRepository.findByCustomerId(customerId);
-		 * if(!customer.isPresent()) { log.error("Customer not found"); throw new
-		 * CustomerNotExistException(ApplicationConstants.CUSTOMER_NOT_EXIST); }
-		 * List<CustomerOrder>
-		 * customerOrderList=customerOrderRepository.findByCustomerId(customer.get().
-		 * getCustomerId()); if(!customerOrderList.isEmpty()) {
-		 * log.error("No orders found on this customerId"); throw new
-		 * OrderNotFoundException(ApplicationConstants.ORDER_NOT_FOUND); }
-		 * List<OrderListDto> orderListDto=new ArrayList<>();
-		 * customerOrderList.forEach(action);
-		 */
-		return null;
+		log.info("Entering into getOrderList");
+		Optional<Customer> customer = customerRepository.findByCustomerId(customerId);
+		if (!customer.isPresent()) {
+			log.error("Customer not found");
+			throw new CustomerNotExistException(ApplicationConstants.CUSTOMER_NOT_EXIST);
+		}
+		List<CustomerOrder> customerOrderList = customerOrderRepository
+				.findByCustomerId(customer.get().getCustomerId());
+		if (!customerOrderList.isEmpty()) {
+			log.error("No orders found on this customerId");
+			throw new OrderNotFoundException(ApplicationConstants.ORDER_NOT_FOUND);
+		}
+		List<OrderListDto> orderListDto = new ArrayList<>();
+		customerOrderList.forEach(orders -> {
+			OrderListDto orderList = new OrderListDto();
+			BeanUtils.copyProperties(customerOrderList, orderList);
+			orderListDto.add(orderList);
+		});
+		OrderResponseDto orderResponseDto = new OrderResponseDto();
+		orderResponseDto.setOrderListDto(orderListDto);
+		return orderResponseDto;
 	}
 
 }

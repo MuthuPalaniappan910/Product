@@ -16,4 +16,10 @@ public class ApplicationConstants {
 	public static final Integer ORDER_FAILURE_STATUS = 404;
 	public static final String ORDER_FOUND="Orders on this CustomerId";
 	public static final Integer ORDER_SUCCESS_STATUS = 200;
+
+	public static final String PRODUCTLIST_EMPTY_MESSAGE = "Sorry!!there are no products found for your search criteria.";
+	public static final Integer PRODUCT_FAILURECODE = 404;
+
+	public static final Integer PRODUCT_SUCCESSCODE = 200;
+	public static final String PRODUCTLIST_DISPLAY_MESSAGE = "Products for your serach are being displayed.";
 }
