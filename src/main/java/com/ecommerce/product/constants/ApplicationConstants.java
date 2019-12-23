@@ -33,5 +33,5 @@ public class ApplicationConstants {
 	public static final Boolean TRUE = true;
 	public static final Boolean FALSE = false;
 
-	public static String PURCHASE_CANNOTMESSAGE="Sorry!!!you cannot have shopping now";
+	public static final String PURCHASE_CANNOTMESSAGE="Sorry!!!you cannot have shopping now";
 }

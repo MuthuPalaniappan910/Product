@@ -14,7 +14,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.ecommerce.product.constants.ApplicationConstants;
+import com.ecommerce.product.dto.BuyRequestDto;
+import com.ecommerce.product.dto.BuyResponseDto;
 import com.ecommerce.product.dto.ProductList;
+import com.ecommerce.product.exception.CustomerNotFoundException;
+import com.ecommerce.product.exception.ProductNotFoundException;
+import com.ecommerce.product.exception.ProductQuantityInvalidException;
+import com.ecommerce.product.exception.PurchaseCannotProceedException;
 import com.ecommerce.product.service.ProductService;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
@@ -28,6 +34,10 @@ public class ProductControllerTest {
 	List<ProductList> productList = null;
 	List<ProductList> productList1 = null;
 	ProductList productDetailsList = null;
+	BuyResponseDto buyResponseDto = null;
+	BuyRequestDto buyRequestDto = null;
+	String successMessage;
+	String failureMessage;
 
 	@Before
 	public void before() {
@@ -35,6 +45,14 @@ public class ProductControllerTest {
 		productDetailsList = new ProductList();
 		productDetailsList.setProductName("abc");
 		productList.add(productDetailsList);
+
+		buyResponseDto = new BuyResponseDto();
+		buyRequestDto = new BuyRequestDto();
+		buyRequestDto.setCustomerId(100L);
+		buyResponseDto.setStatusCode(ApplicationConstants.PRODUCT_SUCCESSCODE);
+
+		successMessage = ApplicationConstants.BUY_SUCCESSMESSAGE;
+		failureMessage=ApplicationConstants.BUY_FAILUREMESSAGE;
 	}
 
 	@Test
@@ -50,4 +68,21 @@ public class ProductControllerTest {
 		Integer expected = productController.getProductDetails("abc").getStatusCodeValue();
 		assertEquals(ApplicationConstants.PRODUCT_FAILURECODE, expected);
 	}
+
+	@Test
+	public void testBuyProductPositive() throws CustomerNotFoundException, ProductNotFoundException,
+			ProductQuantityInvalidException, PurchaseCannotProceedException {
+		Mockito.when(productService.buyProduct(buyRequestDto)).thenReturn(successMessage);
+		Integer expected = productController.buyProduct(buyRequestDto).getStatusCodeValue();
+		assertEquals(ApplicationConstants.PRODUCT_SUCCESSCODE, expected);
+	}
+	
+	@Test
+	public void testBuyProductNegative() throws CustomerNotFoundException, ProductNotFoundException,
+			ProductQuantityInvalidException, PurchaseCannotProceedException {
+		Mockito.when(productService.buyProduct(buyRequestDto)).thenReturn(failureMessage);
+		Integer expected = productController.buyProduct(buyRequestDto).getStatusCodeValue();
+		assertEquals(ApplicationConstants.PRODUCT_FAILURECODE, expected);
+	}
+
 }

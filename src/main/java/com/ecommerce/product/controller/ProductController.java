@@ -29,9 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 /*
  * Used for displaying product and buying a product
  */
-@RequestMapping
+@RequestMapping("/products")
 @Slf4j
-@RestController("/products")
+@RestController
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 public class ProductController {
 	@Autowired
