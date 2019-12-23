@@ -30,9 +30,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
 	@Autowired
 	CustomerRepository customerRepository;
-
+	
 	@Autowired
-	ProductRepository productRepository;
+	ProductRepository productRepository; 
+
 	/**
 	 * @author Hema J This method is used to get the list of orders on particular
 	 *         customerId
@@ -57,6 +58,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		List<OrderListDto> orderListDto = new ArrayList<>();
 		customerOrderList.forEach(orders -> {
 			OrderListDto orderList = new OrderListDto();
+
 			Optional<Product> product = productRepository.findByProductId(orders.getProductId().getProductId());
 			orderList.setOrderId(orders.getOrderId());
 			orderList.setProductName(product.get().getProductName());

@@ -26,12 +26,14 @@ import com.ecommerce.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
-/*
+
+/**
  * Used for displaying product and buying a product
  */
-@RequestMapping("/products")
+
 @Slf4j
 @RestController
+@RequestMapping("/products")
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 public class ProductController {
 	@Autowired

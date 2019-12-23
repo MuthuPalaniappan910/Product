@@ -21,7 +21,6 @@ import com.ecommerce.product.service.CustomerServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class CustomerControllerTest {
 

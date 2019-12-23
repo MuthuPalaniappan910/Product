@@ -11,6 +11,9 @@ import com.ecommerce.product.entity.CustomerOrder;
 @Repository
 public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, Long> {
 
+
 	List<CustomerOrder> findByCustomerId(Customer customerId);
+
+	
 
 }
