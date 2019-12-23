@@ -18,9 +18,9 @@ import com.ecommerce.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RequestMapping
+@RequestMapping("/products")
 @Slf4j
-@RestController("/products")
+@RestController
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 public class ProductController {
 	@Autowired
