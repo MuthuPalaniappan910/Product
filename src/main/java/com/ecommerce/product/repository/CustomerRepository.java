@@ -10,9 +10,8 @@ import com.ecommerce.product.entity.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-	Optional<Customer> findByCustomerEmailAndPassword(String customerEmail, String password);
-
 	Optional<Customer> findByCustomerId(Long customerId);
 
 
+	Optional<Customer> findByCustomerEmailAndPassword(String customerEmail, String password);
 }
