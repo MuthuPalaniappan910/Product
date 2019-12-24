@@ -7,8 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductResponseDto {
-	private List<ProductList> productList;
+public class OrderResponseDto {
+	
 	private Integer statusCode;
 	private String message;
+	
+	private List<OrderListDto> orderListDto;
+
 }

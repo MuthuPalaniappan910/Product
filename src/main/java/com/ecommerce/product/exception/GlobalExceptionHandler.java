@@ -10,8 +10,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(value = NoMatchListFoundException.class)
-	public ResponseEntity<ErrorResponse> handleException(NoMatchListFoundException exception) {
+	@ExceptionHandler(value = CustomerNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(CustomerNotFoundException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+	}
+
+	@ExceptionHandler(value = ProductNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(ProductNotFoundException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+	}
+
+	@ExceptionHandler(value = ProductQuantityInvalidException.class)
+	public ResponseEntity<ErrorResponse> handleException(ProductQuantityInvalidException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	@ExceptionHandler(value = PurchaseCannotProceedException.class)
+	public ResponseEntity<ErrorResponse> handleException(PurchaseCannotProceedException exception) {
 		ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
 	}
