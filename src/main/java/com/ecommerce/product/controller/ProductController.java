@@ -19,6 +19,7 @@ import com.ecommerce.product.dto.BuyResponseDto;
 import com.ecommerce.product.dto.ProductList;
 import com.ecommerce.product.dto.ProductResponseDto;
 import com.ecommerce.product.exception.CustomerNotFoundException;
+import com.ecommerce.product.exception.OtpInvalidException;
 import com.ecommerce.product.exception.ProductNotFoundException;
 import com.ecommerce.product.exception.ProductQuantityInvalidException;
 import com.ecommerce.product.exception.PurchaseCannotProceedException;
@@ -79,11 +80,12 @@ public class ProductController {
 	 * @throws ProductNotFoundException
 	 * @throws ProductQuantityInvalidException
 	 * @throws PurchaseCannotProceedException
+	 * @throws OtpInvalidException 
 	 */
 	@PostMapping
 	public ResponseEntity<BuyResponseDto> buyProduct(@RequestBody BuyRequestDto buyRequestDto)
 			throws CustomerNotFoundException, ProductNotFoundException, ProductQuantityInvalidException,
-			PurchaseCannotProceedException {
+			PurchaseCannotProceedException, OtpInvalidException {
 		BuyResponseDto buyResponseDto = new BuyResponseDto();
 		String customerOrder = productService.buyProduct(buyRequestDto);
 		if (!(customerOrder.equalsIgnoreCase(ApplicationConstants.BUY_SUCCESSMESSAGE))) {

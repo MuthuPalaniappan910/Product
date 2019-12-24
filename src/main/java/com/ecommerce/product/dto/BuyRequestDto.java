@@ -11,4 +11,5 @@ public class BuyRequestDto {
 	private Integer productQuantity;
 	private Long cardNumber;
 	private Integer cvv;
+	private Long otp;
 }

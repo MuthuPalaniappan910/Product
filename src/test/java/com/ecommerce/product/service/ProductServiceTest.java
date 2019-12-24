@@ -13,12 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.web.client.RestTemplate;
 
 import com.ecommerce.product.dto.BuyRequestDto;
 import com.ecommerce.product.dto.ProductList;
 import com.ecommerce.product.entity.Customer;
 import com.ecommerce.product.entity.Product;
 import com.ecommerce.product.exception.CustomerNotFoundException;
+import com.ecommerce.product.exception.OtpInvalidException;
 import com.ecommerce.product.exception.ProductNotFoundException;
 import com.ecommerce.product.exception.ProductQuantityInvalidException;
 import com.ecommerce.product.exception.PurchaseCannotProceedException;
@@ -56,7 +58,7 @@ public class ProductServiceTest {
 
 	@Test(expected = CustomerNotFoundException.class)
 	public void testBuyProductCustomerNotPresent() throws CustomerNotFoundException, ProductNotFoundException,
-			ProductQuantityInvalidException, PurchaseCannotProceedException {
+			ProductQuantityInvalidException, PurchaseCannotProceedException,OtpInvalidException  {
 		BuyRequestDto buyRequestDto = new BuyRequestDto();
 		Customer customer = new Customer();
 		customer.setCustomerId(2L);
@@ -67,7 +69,7 @@ public class ProductServiceTest {
 
 	@Test(expected = ProductNotFoundException.class)
 	public void testBuyProductNotPresent() throws CustomerNotFoundException, ProductNotFoundException,
-			ProductQuantityInvalidException, PurchaseCannotProceedException {
+			ProductQuantityInvalidException, PurchaseCannotProceedException,OtpInvalidException  {
 		BuyRequestDto buyRequestDto = new BuyRequestDto();
 		Customer customer = new Customer();
 		customer.setCustomerId(2L);
@@ -82,7 +84,7 @@ public class ProductServiceTest {
 
 	@Test(expected = ProductQuantityInvalidException.class)
 	public void testBuyProductAvailableException() throws CustomerNotFoundException, ProductNotFoundException,
-			ProductQuantityInvalidException, PurchaseCannotProceedException {
+			ProductQuantityInvalidException, PurchaseCannotProceedException ,OtpInvalidException {
 		BuyRequestDto buyRequestDto = new BuyRequestDto();
 		Customer customer = new Customer();
 		customer.setCustomerId(2L);
@@ -94,6 +96,30 @@ public class ProductServiceTest {
 		buyRequestDto.setProductQuantity(3);
 		Mockito.when(customerRepository.findByCustomerId(2L)).thenReturn(Optional.of(customer));
 		Mockito.when(productRepository.findByProductId(2L)).thenReturn(Optional.of(product));
+		productServiceImpl.buyProduct(buyRequestDto);
+	}
+
+	@Test(expected = PurchaseCannotProceedException.class)
+	public void testBuyProductInvalidException() throws CustomerNotFoundException, ProductNotFoundException,
+			ProductQuantityInvalidException, PurchaseCannotProceedException,OtpInvalidException  {
+		BuyRequestDto buyRequestDto = new BuyRequestDto();
+		Customer customer = new Customer();
+		customer.setCustomerId(2L);
+		Product product = new Product();
+		product.setProductId(2L);
+		product.setProductQuantity(2);
+		buyRequestDto.setCustomerId(2L);
+		buyRequestDto.setProductId(2L);
+		buyRequestDto.setProductQuantity(1);
+		Mockito.when(customerRepository.findByCustomerId(2L)).thenReturn(Optional.of(customer));
+		Mockito.when(productRepository.findByProductId(2L)).thenReturn(Optional.of(product));
+		Long cardNumber = 1L;
+		Integer cvv = 909;
+		Double price = 150.00;
+		final String uri = "http://10.117.189.62:8087/bank/cards?cardNumber=" + cardNumber + "&cvv=" + cvv + "&price="
+				+ price;
+		RestTemplate restTemplate = new RestTemplate();
+		Mockito.when(restTemplate.getForEntity(uri, Boolean.class).getBody()).thenReturn(false);
 		productServiceImpl.buyProduct(buyRequestDto);
 	}
 }

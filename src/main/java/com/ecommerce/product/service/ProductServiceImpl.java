@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -22,6 +23,7 @@ import com.ecommerce.product.entity.Customer;
 import com.ecommerce.product.entity.CustomerOrder;
 import com.ecommerce.product.entity.Product;
 import com.ecommerce.product.exception.CustomerNotFoundException;
+import com.ecommerce.product.exception.OtpInvalidException;
 import com.ecommerce.product.exception.ProductNotFoundException;
 import com.ecommerce.product.exception.ProductQuantityInvalidException;
 import com.ecommerce.product.exception.PurchaseCannotProceedException;
@@ -47,7 +49,9 @@ public class ProductServiceImpl implements ProductService {
 	CustomerOrderRepository customerOrderRepository;
 
 	/**
-	 * @author Muthu Method is used to display the product details based on the
+	 * @author Muthu 
+	 * 
+	 * Method is used to display the product details based on the
 	 *         partial name entered
 	 * @param productName
 	 * @return ProductResponseDto which contains details of product that includes
@@ -79,11 +83,12 @@ public class ProductServiceImpl implements ProductService {
 	 * @throws ProductNotFoundException
 	 * @throws ProductQuantityInvalidException
 	 * @throws PurchaseCannotProceedException
+	 * @throws OtpInvalidException 
 	 */
 
 	@Override
 	public String buyProduct(BuyRequestDto buyRequestDto) throws CustomerNotFoundException, ProductNotFoundException,
-			ProductQuantityInvalidException, PurchaseCannotProceedException {
+			ProductQuantityInvalidException, PurchaseCannotProceedException, OtpInvalidException {
 		Long customerId = buyRequestDto.getCustomerId();
 		Long productId = buyRequestDto.getProductId();
 		Integer productQuantity = buyRequestDto.getProductQuantity();
@@ -129,7 +134,11 @@ public class ProductServiceImpl implements ProductService {
 			log.error(ApplicationConstants.PURCHASE_CANNOTMESSAGE);
 			throw new PurchaseCannotProceedException(ApplicationConstants.PURCHASE_CANNOTMESSAGE);
 		}
-
+		Long otp=customerDetails.get().getOtp();
+		if(!(Objects.equals(otp, buyRequestDto.getOtp()))) {
+			log.error(ApplicationConstants.OTP_INVALID_MESSAGE);
+			throw new OtpInvalidException(ApplicationConstants.OTP_INVALID_MESSAGE);
+		}
 		customerOrder.setCustomerId(customerDetails.get());
 		customerOrder.setProductId(productDetails.get());
 		customerOrder.setPurchasedTime(LocalDateTime.now());

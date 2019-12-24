@@ -34,4 +34,7 @@ public class ApplicationConstants {
 	public static final Boolean FALSE = false;
 
 	public static final String PURCHASE_CANNOTMESSAGE="Sorry!!!you cannot have shopping now";
+	public static final String SUCCESS = "Success";
+	public static final String FAILURE = "Failure";
+	public static final String OTP_INVALID_MESSAGE="Please check the otp entered";
 }
