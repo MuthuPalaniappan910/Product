@@ -19,6 +19,13 @@ import com.ecommerce.product.service.CustomerOrderService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Hema J
+ *  This class is used to perform all the customer order related
+ *               operations
+ */
+
+
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 @RestController
 @RequestMapping("/customerorders")

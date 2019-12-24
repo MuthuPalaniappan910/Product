@@ -21,6 +21,7 @@
 			**product/*,
 			**/dto/*,
 			**/entity/*,
+			**/model/*,
 			**/util/*,
 			**/config/*,
 			**/exception/*,
