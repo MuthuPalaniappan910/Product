@@ -33,7 +33,7 @@ import com.ecommerce.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-/*
+/**
  * Used for displaying product and buying a product
  */
 @Service
