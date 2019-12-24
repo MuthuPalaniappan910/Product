@@ -19,7 +19,7 @@
 			<sonar.coverage.exclusions>
 			**product/*,
 			**/dto/*,
-			**/model/*,
+			**/entity/*,
 			**/util/*,
 			**/config/*,
 			**/exception/*,
@@ -32,6 +32,14 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
