@@ -13,6 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import com.ecommerce.product.dto.BuyRequestDto;
 import com.ecommerce.product.dto.ProductList;
@@ -79,7 +82,7 @@ public class ProductServiceTest {
 		Mockito.when(productRepository.findByProductId(1L)).thenReturn(Optional.of(product));
 		productServiceImpl.buyProduct(buyRequestDto);
 	}
-	
+
 	@Test(expected = ProductQuantityInvalidException.class)
 	public void testBuyProductAvailableException() throws CustomerNotFoundException, ProductNotFoundException,
 			ProductQuantityInvalidException, PurchaseCannotProceedException {

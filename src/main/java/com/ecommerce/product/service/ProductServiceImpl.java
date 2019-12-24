@@ -99,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
 			throw new ProductNotFoundException(ApplicationConstants.PRODUCTNOTFOUND_MESSAGE);
 		}
 		Integer productAvailableQuantity = productDetails.get().getProductQuantity();
-		if (!(productAvailableQuantity > productQuantity)) {
+		if (productAvailableQuantity <= productQuantity) {
 			log.error(ApplicationConstants.PRODUCTQUANTITYINVALID_MESSAGE);
 			throw new ProductQuantityInvalidException(ApplicationConstants.PRODUCTQUANTITYINVALID_MESSAGE);
 		}
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 		Boolean response = restTemplate.exchange(uri, HttpMethod.GET, entity, Boolean.class).getBody();
 		if (response.equals(ApplicationConstants.FALSE)) {
 			log.error(ApplicationConstants.PURCHASE_CANNOTMESSAGE);
@@ -123,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
 		RestTemplate restTemplate1 = new RestTemplate();
 		HttpHeaders headers1 = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity1 = new HttpEntity<String>("parameters", headers1);
+		HttpEntity<String> entity1 = new HttpEntity<>("parameters", headers1);
 		Boolean response1 = restTemplate1.exchange(uri1, HttpMethod.POST, entity1, Boolean.class).getBody();
 		if (response1.equals(ApplicationConstants.FALSE)) {
 			log.error(ApplicationConstants.PURCHASE_CANNOTMESSAGE);
