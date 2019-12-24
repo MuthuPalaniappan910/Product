@@ -31,7 +31,11 @@ import com.ecommerce.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+<<<<<<< HEAD
 /**
+=======
+/*
+>>>>>>> beef0a6ea99be06d9b404d37c0876f4103574a8a
  * Used for displaying product and buying a product
  */
 @Service

@@ -18,11 +18,15 @@ import com.ecommerce.product.exception.OrderNotFoundException;
 import com.ecommerce.product.service.CustomerOrderService;
 
 import lombok.extern.slf4j.Slf4j;
+<<<<<<< HEAD
 /**
  * @author Hema J
  *  This class is used to perform all the customer order related
  *               operations
  */
+=======
+
+>>>>>>> beef0a6ea99be06d9b404d37c0876f4103574a8a
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 @RestController
 @RequestMapping("/customerorders")

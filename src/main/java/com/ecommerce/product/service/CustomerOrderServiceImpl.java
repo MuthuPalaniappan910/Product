@@ -20,11 +20,15 @@ import com.ecommerce.product.repository.CustomerRepository;
 import com.ecommerce.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
+<<<<<<< HEAD
 /**
  * @author Hema J
  *  This class is used to perform all the customer order related
  *               operations
  */
+=======
+
+>>>>>>> beef0a6ea99be06d9b404d37c0876f4103574a8a
 @Slf4j
 @Service
 public class CustomerOrderServiceImpl implements CustomerOrderService {

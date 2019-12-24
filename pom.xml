@@ -20,7 +20,11 @@
 		<sonar.coverage.exclusions>
 			**product/*,
 			**/dto/*,
+<<<<<<< HEAD
 			**/entity/*,
+=======
+			**/model/*,
+>>>>>>> beef0a6ea99be06d9b404d37c0876f4103574a8a
 			**/util/*,
 			**/config/*,
 			**/exception/*,
